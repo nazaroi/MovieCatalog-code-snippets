@@ -1,0 +1,12 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MovieCatalog" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:indeterminateTint">@color/blue</item>
+        <item name="android:windowBackground">@color/default_bg_color</item>
+        <item name="android:statusBarColor">@color/status_bar_bg_color</item>
+    </style>
+
+    <style name="Theme.MovieCatalog" parent="Base.Theme.MovieCatalog" />
+</resources>
