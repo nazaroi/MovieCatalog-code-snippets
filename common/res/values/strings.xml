@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="now_playing">Now playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="top_rated">Top rated</string>
+    <string name="popular">Popular</string>
+    <string name="see_all">See all</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="minutes">Minutes</string>
+    <string name="movie_duration">%s Minutes</string>
+    <string name="movie_release_date">Release Date: %s</string>
+    <string name="cancel">Cancel</string>
+    <string name="detail">Detail</string>
+    <string name="trailer">Trailer</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="cast_and_crew">Cast and Crew</string>
+    <string name="error_loading_more_content">Failed to load more content. Tap to retry.</string>
+    <string name="retry">Retry</string>
+</resources>
