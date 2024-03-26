@@ -1,6 +1,6 @@
 # MovieCatalog (code snippets)
 
-*The complete MovieCatalog app source code is located in a private repo.*
+<p><strong><span style="color: red;">The complete MovieCatalog app source code is located in a private repo.</span></strong></p>
 
 MovieCatalog is a sample app built using architecture components, **MVI** and best practices, allowing users to explore and discover movies from [The Movie Database (TMDb)](https://www.themoviedb.org/) API. It utilizes a **multi-module** architecture and caches movies locally using [Room](https://developer.android.com/jetpack/androidx/releases/room) & [RemoteMediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator).
 
