@@ -30,7 +30,7 @@ MovieCatalog is a sample app built using architecture components, **MVI** and be
 
 * Architecture
     * Single-activity with [Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started)
-    * Complex MVI (includes state, intents, effects, and also participate in navigation)
+    * Complex MVI (includes state, intents, effects, also involved in navigation)
     * Multi-module
     * Navigation through deep links
     * Caching using [Room](https://developer.android.com/jetpack/androidx/releases/room) & [RemoteMediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator)
