@@ -10,7 +10,7 @@ MovieCatalog is a sample app built using architecture components, **MVI** and be
   <img src="/screenshots/recording_wishlist_screen.gif" width="30%"/>
 </p>
 
-<p>
+<p align="center">
   <img src="/screenshots/screenshot_movie_trailer.png" width="30%"/>
   <img src="/screenshots/screenshot_movie_category.png" width="30%"/>
 </p>
