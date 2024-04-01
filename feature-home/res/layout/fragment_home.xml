@@ -59,7 +59,7 @@
                     tools:listitem="@layout/item_movie_card" />
 
                 <ProgressBar
-                    android:id="@+id/now_playing_progress_bar"
+                    android:id="@+id/now_playing_loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -110,7 +110,7 @@
                     tools:listitem="@layout/item_movie_card" />
 
                 <ProgressBar
-                    android:id="@+id/popular_progress_bar"
+                    android:id="@+id/popular_loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -161,7 +161,7 @@
                     tools:listitem="@layout/item_movie_card" />
 
                 <ProgressBar
-                    android:id="@+id/top_rated_progress_bar"
+                    android:id="@+id/top_rated_loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -212,7 +212,7 @@
                     tools:listitem="@layout/item_movie_card" />
 
                 <ProgressBar
-                    android:id="@+id/upcoming_progress_bar"
+                    android:id="@+id/upcoming_loading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

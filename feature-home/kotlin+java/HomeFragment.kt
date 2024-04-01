@@ -1,11 +1,13 @@
 package com.nazaroi.feature_home
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import com.nazaroi.base.ktx.getParcelableCompat
 import com.nazaroi.common.screen.Screen
 import com.nazaroi.common.shared.SharedMviFragment
 import com.nazaroi.domain.enums.MovieCategory
@@ -18,7 +20,10 @@ import java.util.EnumMap
 class HomeFragment :
     SharedMviFragment<FragmentHomeBinding, HomeViewModel, HomeState, HomeIntent, HomeEffect>() {
 
-    override val viewModel: HomeViewModel by viewModels()
+    override val viewModel: HomeViewModel by activityViewModels()
+
+    private val recyclerViewStates: EnumMap<MovieCategory, Parcelable> =
+        EnumMap(MovieCategory::class.java)
 
     override fun createViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
@@ -31,14 +36,20 @@ class HomeFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setSharedState(Screen.Home)
+        sharedViewModel.setState(Screen.Home)
+
+        savedInstanceState?.let {
+            it.getParcelableCompat<Parcelable>(NowPlayingRecyclerViewState)?.let {
+                binding.nowPlayingRecyclerView.layoutManager?.onRestoreInstanceState(it)
+            }
+        }
     }
 
     override fun setupViews() {
 
         binding.root.setOnRefreshListener {
             binding.root.isRefreshing = false
-            sendIntent(HomeIntent.RefreshMovies)
+            viewModel.sendIntent(HomeIntent.RefreshMovies)
         }
 
         binding.nowPlayingSeeAll.setOnClickListener {
@@ -82,12 +93,24 @@ class HomeFragment :
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        recyclerViewStates[MovieCategory.NowPlaying] =
+            binding.nowPlayingRecyclerView.layoutManager?.onSaveInstanceState()
+
+        val nowPlayingRecyclerViewState =
+            binding.nowPlayingRecyclerView.layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable(NowPlayingRecyclerViewState, nowPlayingRecyclerViewState)
+
+    }
+
     private fun navigateToMovieCategoryList(category: MovieCategory) {
-        sendIntent(HomeIntent.NavigateToMovieCategory(category))
+        viewModel.sendIntent(HomeIntent.NavigateToMovieCategory(category))
     }
 
     private fun navigateToMovieTrailer(movieId: Int) {
-        sendIntent(HomeIntent.NavigateToMovieTrailer(movieId))
+        viewModel.sendIntent(HomeIntent.NavigateToMovieTrailer(movieId))
     }
 
     override fun handleEffect(effect: HomeEffect) {
@@ -96,19 +119,26 @@ class HomeFragment :
     override fun renderState(state: HomeState) {
         binding.updateWithState(state, movieCardAdapterMap)
     }
+
+    companion object {
+        const val NowPlayingRecyclerViewState = "now_playing_recycler_view_state"
+        const val PopularRecyclerViewState = "popular_recycler_view_state"
+        const val TopRatedRecyclerViewState = "top_rated_recycler_view_state"
+        const val UpcomingRecyclerViewState = "upcoming_recycler_view_state"
+    }
 }
 
 private fun FragmentHomeBinding.updateWithState(
     state: HomeState, movieCardAdapterMap: EnumMap<MovieCategory, MovieCardAdapter>
 ) {
     nowPlayingRecyclerView.isVisible = !state.nowPlayingMovies.loading
-    nowPlayingProgressBar.isVisible = state.nowPlayingMovies.loading
+    nowPlayingLoading.isVisible = state.nowPlayingMovies.loading
     popularRecyclerView.isVisible = !state.popularMovies.loading
-    popularProgressBar.isVisible = state.popularMovies.loading
+    popularLoading.isVisible = state.popularMovies.loading
     topRatedRecyclerView.isVisible = !state.topRatedMovies.loading
-    topRatedProgressBar.isVisible = state.topRatedMovies.loading
+    topRatedLoading.isVisible = state.topRatedMovies.loading
     upcomingRecyclerView.isVisible = !state.upcomingMovies.loading
-    upcomingProgressBar.isVisible = state.upcomingMovies.loading
+    upcomingLoading.isVisible = state.upcomingMovies.loading
 
     movieCardAdapterMap[MovieCategory.NowPlaying]?.submitList(state.nowPlayingMovies.movies)
     movieCardAdapterMap[MovieCategory.Popular]?.submitList(state.popularMovies.movies)

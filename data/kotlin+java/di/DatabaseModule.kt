@@ -44,7 +44,7 @@ object DatabaseModule {
         }
 
         return Room.databaseBuilder(
-            context.applicationContext, AppDatabase::class.java, "app_database43"
+            context.applicationContext, AppDatabase::class.java, "app_database64"
         ).fallbackToDestructiveMigration().addCallback(callback).build()
     }
 
