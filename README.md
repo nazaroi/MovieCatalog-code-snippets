@@ -16,6 +16,13 @@ MovieCatalog is a sample app built using architecture components, **MVI** and be
   <img src="/screenshots/screenshot_wishlist_screen.png" width="30%"/>
 </p>
 
+## Demo Video
+
+Watch a screen recording demo of the app [here](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+
+## Download APK
+
+Download the APK for the latest release of the app [here](https://drive.google.com/file/d/18_CzY1CzkZ1DjNzeqMjE-Hlx98sf3mWD/view?usp=sharing).
 
 ## Description
 
