@@ -6,8 +6,6 @@ MovieCatalog is a sample app built using architecture components, **MVI** and be
 
 <a href="https://play.google.com/store/apps/details?id=com.nazaroi.moviecatalog"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70"></a>
 
-Download release APK [here](https://drive.google.com/file/d/18_CzY1CzkZ1DjNzeqMjE-Hlx98sf3mWD/view?usp=sharing).
-
 <p align="center">
   <img src="/screenshots/recording_home_screen.gif" width="30%"/>
   <img src="/screenshots/screenshot_movie_category.png" width="30%"/>
