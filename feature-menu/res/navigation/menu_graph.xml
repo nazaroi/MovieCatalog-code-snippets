@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menu_graph">
+
+    <fragment
+        android:id="@+id/about_us_destination"
+        android:name="com.nazaroi.feature_menu.about_us.AboutUsFragment"
+        android:label="AboutUsFragment">
+        <deepLink app:uri="app://about-us" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/privacy_policy_destination"
+        android:name="com.nazaroi.feature_menu.privacy_policy.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment">
+        <deepLink app:uri="app://privacy-policy" />
+    </fragment>
+</navigation>
