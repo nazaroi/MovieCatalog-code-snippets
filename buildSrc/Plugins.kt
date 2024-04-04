@@ -5,4 +5,6 @@ object Plugins {
     const val androidLibrary = "com.android.library"
     const val kotlinKapt = "kotlin-kapt"
     const val daggerHilt = "com.google.dagger.hilt.android"
+    const val googleServices = "com.google.gms.google-services"
+    const val firebaseCrashlytics = "com.google.firebase.crashlytics"
 }

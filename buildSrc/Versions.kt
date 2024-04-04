@@ -1,10 +1,10 @@
 object Versions {
 
-    // Kotlin
+    // Plugins
     const val kotlin = "1.9.22"
-
-    // Gradle
-    const val gradlePlugin = "8.2.1"
+    const val gradle = "8.2.1"
+    const val googleServices = "4.4.1"
+    const val firebaseCrashlytics = "2.9.9"
 
     // Core
     const val core = "1.12.0"
@@ -35,6 +35,9 @@ object Versions {
     const val swipeRefreshLayout = "1.1.0"
     const val viewPager2 = "1.1.0-beta02"
     const val recyclerView = "1.3.2"
+
+    // Firebase
+    const val firebaseBom = "32.8.0"
 
     // Glide
     const val glide = "4.16.0"
