@@ -4,6 +4,8 @@
 
 MovieCatalog is a sample app built using architecture components, **MVI** and best practices, allowing users to explore and discover movies from [The Movie Database (TMDb)](https://www.themoviedb.org/) API. It utilizes a **multi-module** architecture and caches movies locally using [Room](https://developer.android.com/jetpack/androidx/releases/room) & [RemoteMediator](https://developer.android.com/reference/kotlin/androidx/paging/RemoteMediator). 
 
+<a href="https://play.google.com/store/apps/details?id=com.nazaroi.moviecatalog"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70"></a>
+
 Download release APK [here](https://drive.google.com/file/d/18_CzY1CzkZ1DjNzeqMjE-Hlx98sf3mWD/view?usp=sharing).
 
 <p align="center">
