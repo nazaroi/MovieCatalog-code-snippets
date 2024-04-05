@@ -35,6 +35,7 @@ MovieCatalog is a sample app built using architecture components, **MVI** and be
     * [Hilt](https://dagger.dev/hilt/)
     * [Retrofit](https://square.github.io/retrofit/)
     * [Glide](https://github.com/bumptech/glide)
+    * [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics)
 
 * Architecture
     * Single-activity with [Navigation component](https://developer.android.com/guide/navigation/navigation-getting-started)
