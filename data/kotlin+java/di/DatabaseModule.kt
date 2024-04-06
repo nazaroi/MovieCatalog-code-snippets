@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.nazaroi.base.ktx.logI
 import com.nazaroi.data.local.dao.common.CompanyDao
 import com.nazaroi.data.local.dao.common.CountryDao
 import com.nazaroi.data.local.dao.common.LanguageDao
@@ -38,13 +39,16 @@ object DatabaseModule {
         val callback = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
+                logI("RoomDatabase.Callback.onCreate called while creating database.")
                 val workRequest = OneTimeWorkRequestBuilder<FetchGenresWorker>().build()
                 WorkManager.getInstance(context).enqueue(workRequest)
             }
         }
 
+        logI("Creating new database")
+
         return Room.databaseBuilder(
-            context.applicationContext, AppDatabase::class.java, "app_database64"
+            context.applicationContext, AppDatabase::class.java, "app_database69"
         ).fallbackToDestructiveMigration().addCallback(callback).build()
     }
 

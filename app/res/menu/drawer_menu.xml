@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_privacy_policy"
+        android:icon="@drawable/ic_privacy_policy"
+        android:title="@string/privacy_policy" />
+    <item
+        android:id="@+id/menu_about_us"
+        android:icon="@drawable/ic_about_us"
+        android:title="@string/about_us" />
+</menu>

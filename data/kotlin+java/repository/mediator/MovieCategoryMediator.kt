@@ -5,6 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.nazaroi.base.ktx.logE
+import com.nazaroi.base.logger.LogcatLogger
 import com.nazaroi.common.constant.ApiPageSize
 import com.nazaroi.data.local.database.AppDatabase
 import com.nazaroi.data.local.entity.movie.CategoryMovieOrder
@@ -20,7 +22,7 @@ import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class MovieCategoryMediator @AssistedInject constructor(
-    private val api: MovieApi,
+    private val movieApi: MovieApi,
     private val database: AppDatabase,
     @Assisted private val movieCategory: MovieCategory,
     private val shortMovieDtoToEntityMapper: ShortMovieDtoToEntityMapper
@@ -29,24 +31,37 @@ class MovieCategoryMediator @AssistedInject constructor(
     override suspend fun load(
         loadType: LoadType, state: PagingState<Int, MovieEntity>
     ): MediatorResult {
+
+        LogcatLogger.debug(javaClass.simpleName, "------")
+
+        LogcatLogger.debug(javaClass.simpleName, "load loadType: $loadType")
+
         val page = when (loadType) {
             LoadType.REFRESH -> 1
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
-                val itemCount = database.categoryMovieOrderDao().countForMovieCategory(movieCategory)
+                val itemCount =
+                    database.categoryMovieOrderDao().countForMovieCategory(movieCategory)
                 val lastLoadedPage = itemCount / ApiPageSize
+                LogcatLogger.debug(javaClass.simpleName, "load itemCount $itemCount")
                 lastLoadedPage + 1
             }
         }
 
+        LogcatLogger.debug(javaClass.simpleName, "load page: $page")
+
         return try {
 
             val response = when (movieCategory) {
-                MovieCategory.NowPlaying -> api.fetchNowPlayingMovies(page)
-                MovieCategory.Popular -> api.fetchPopularMovies(page)
-                MovieCategory.TopRated -> api.fetchTopRatedMovies(page)
-                MovieCategory.Upcoming -> api.fetchUpcomingMovies(page)
+                MovieCategory.NowPlaying -> movieApi.fetchNowPlayingMovies(page)
+                MovieCategory.Popular -> movieApi.fetchPopularMovies(page)
+                MovieCategory.TopRated -> movieApi.fetchTopRatedMovies(page)
+                MovieCategory.Upcoming -> movieApi.fetchUpcomingMovies(page)
             }
+
+            LogcatLogger.debug(
+                javaClass.simpleName, "load response.results.size: ${response.results.size}"
+            )
 
             database.withTransaction {
 
@@ -62,16 +77,19 @@ class MovieCategoryMediator @AssistedInject constructor(
                         CategoryMovieOrder(
                             movieCategory = movieCategory,
                             movieId = movie.id,
-                            orderInList = index + (page - 1) * ApiPageSize
+                            orderInList = index + (page - 1) * ApiPageSize,
+                            page
                         )
                     })
             }
 
             MediatorResult.Success(endOfPaginationReached = response.page == response.total_pages)
-        } catch (exception: IOException) {
-            MediatorResult.Error(exception)
-        } catch (exception: HttpException) {
-            MediatorResult.Error(exception)
+        } catch (e: IOException) {
+            logE("Error loading movies by category", throwable = e)
+            MediatorResult.Error(e)
+        } catch (e: HttpException) {
+            logE("Error loading movies by category", throwable = e)
+            MediatorResult.Error(e)
         }
     }
 

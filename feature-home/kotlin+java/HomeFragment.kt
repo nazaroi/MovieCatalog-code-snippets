@@ -22,9 +22,6 @@ class HomeFragment :
 
     override val viewModel: HomeViewModel by activityViewModels()
 
-    private val recyclerViewStates: EnumMap<MovieCategory, Parcelable> =
-        EnumMap(MovieCategory::class.java)
-
     override fun createViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentHomeBinding {
@@ -37,12 +34,6 @@ class HomeFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedViewModel.setState(Screen.Home)
-
-        savedInstanceState?.let {
-            it.getParcelableCompat<Parcelable>(NowPlayingRecyclerViewState)?.let {
-                binding.nowPlayingRecyclerView.layoutManager?.onRestoreInstanceState(it)
-            }
-        }
     }
 
     override fun setupViews() {
@@ -93,18 +84,6 @@ class HomeFragment :
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        recyclerViewStates[MovieCategory.NowPlaying] =
-            binding.nowPlayingRecyclerView.layoutManager?.onSaveInstanceState()
-
-        val nowPlayingRecyclerViewState =
-            binding.nowPlayingRecyclerView.layoutManager?.onSaveInstanceState()
-
-        outState.putParcelable(NowPlayingRecyclerViewState, nowPlayingRecyclerViewState)
-
-    }
-
     private fun navigateToMovieCategoryList(category: MovieCategory) {
         viewModel.sendIntent(HomeIntent.NavigateToMovieCategory(category))
     }
@@ -118,13 +97,6 @@ class HomeFragment :
 
     override fun renderState(state: HomeState) {
         binding.updateWithState(state, movieCardAdapterMap)
-    }
-
-    companion object {
-        const val NowPlayingRecyclerViewState = "now_playing_recycler_view_state"
-        const val PopularRecyclerViewState = "popular_recycler_view_state"
-        const val TopRatedRecyclerViewState = "top_rated_recycler_view_state"
-        const val UpcomingRecyclerViewState = "upcoming_recycler_view_state"
     }
 }
 

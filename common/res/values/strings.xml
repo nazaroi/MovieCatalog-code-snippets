@@ -17,5 +17,9 @@
     <string name="synopsis">Synopsis</string>
     <string name="cast_and_crew">Cast and Crew</string>
     <string name="error_loading_more_content">Failed to load more content. Tap to retry.</string>
+    <string name="no_movies_found_message">We Are Sorry, We Can Not Find the Movie :(</string>
+    <string name="no_movies_yet_message">There Are No Movies Yet!</string>
     <string name="retry">Retry</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="about_us">About us</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.nazaroi.base.ktx.logE
+import com.nazaroi.base.ktx.logI
 import com.nazaroi.data.local.database.AppDatabase
 import com.nazaroi.data.mapper.genre.GenreDtoToEntityMapper
 import com.nazaroi.data.remote.api.GenreApi
@@ -25,9 +27,10 @@ class FetchGenresWorker @AssistedInject constructor(
             api.fetchMovieGenres().genres.map(genreDtoToEntityMapper::map).let {
                 database.genreDao().insertAll(it)
             }
-
+            logI("Successfully fetched movie genres!")
             Result.success()
         } catch (e: Exception) {
+            logE("Failed to fetch movie genres!", throwable = e)
             Result.failure()
         }
     }

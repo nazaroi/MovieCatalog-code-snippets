@@ -3,6 +3,7 @@ package com.nazaroi.feature_search
 import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.nazaroi.base.ktx.logE
 import com.nazaroi.base.mvi.MviNavigationCommand
 import com.nazaroi.base.mvi.MviViewModel
 import com.nazaroi.base.util.onFailure
@@ -59,6 +60,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
+                logE("streamMoviesBySearchQueryUseCase failed", throwable = it.cause)
                 reduceState { copy(loading = false, fault = it) }
             }
     }

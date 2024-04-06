@@ -136,3 +136,125 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+private fun ActivityMainBinding.setupToolbar(
+    navController: NavController,
+    screen: Screen,
+    toolbarData: Bundle? = null,
+    onRightToolbarIconClick: () -> Unit
+) {
+
+    resetToolbar()
+
+    toolbar.isVisible = screen != Screen.None
+
+    when (screen) {
+        Screen.Home -> setupMainToolbar()
+        Screen.MovieCategory -> {
+            val movieCategory = toolbarData!!.getEnumOrThrow<MovieCategory>("movie_category")
+            setupMovieCategoryListToolbar(navController, movieCategory)
+        }
+
+        Screen.MovieTrailer -> {
+            val isFavorite = toolbarData?.getBoolean("is_favorite")
+            setupMovieTrailerToolbar(navController, isFavorite, onRightToolbarIconClick)
+        }
+
+        Screen.Search -> setupSearchToolbar(navController)
+        Screen.Wishlist -> setupWishlistToolbar(navController)
+        Screen.PrivacyPolicy -> setupPrivacyPolicyToolbar(navController)
+        Screen.AboutUs -> setupAboutUsToolbar(navController)
+        Screen.None -> {}
+    }
+}
+
+private fun ActivityMainBinding.resetToolbar() {
+    leftIcon.apply {
+        setImageDrawable(null)
+        setOnClickListener(null)
+    }
+    toolbarTitle.text = ""
+    rightIcon.apply {
+        setImageDrawable(null)
+        setOnClickListener(null)
+    }
+}
+
+private fun ActivityMainBinding.setupMainToolbar() {
+
+    fun toggleDrawer() {
+        if (drawerLayout.isDrawerOpen(navView)) {
+            drawerLayout.closeDrawer(navView)
+        } else {
+            drawerLayout.openDrawer(navView)
+        }
+    }
+
+    leftIcon.apply {
+        setImageResource(com.nazaroi.common.R.drawable.ic_menu)
+        setOnClickListener { toggleDrawer() }
+    }
+
+    toolbarTitle.text = context.getString(R.string.app_name)
+}
+
+private fun ActivityMainBinding.setupMovieCategoryListToolbar(
+    navController: NavController, movieCategory: MovieCategory
+) {
+
+    leftIcon.setBackNavigation(navController)
+
+    toolbarTitle.text = when (movieCategory) {
+        MovieCategory.NowPlaying -> com.nazaroi.common.R.string.now_playing
+        MovieCategory.Popular -> com.nazaroi.common.R.string.popular
+        MovieCategory.TopRated -> com.nazaroi.common.R.string.top_rated
+        MovieCategory.Upcoming -> com.nazaroi.common.R.string.upcoming
+    }.let {
+        context.getString(it)
+    }
+}
+
+private fun ActivityMainBinding.setupMovieTrailerToolbar(
+    navController: NavController, isFavorite: Boolean? = null, onRightIconClick: () -> Unit
+) {
+    leftIcon.setBackNavigation(navController)
+    toolbarTitle.text = context.getString(com.nazaroi.common.R.string.trailer)
+
+    if (isFavorite != null) {
+        rightIcon.imageTintList = run {
+
+            val colorId = if (isFavorite) {
+                com.nazaroi.common.R.color.red
+            } else {
+                com.nazaroi.common.R.color.gray_92929D
+            }
+
+            ColorStateList.valueOf(ContextCompat.getColor(context, colorId))
+        }
+
+        rightIcon.setImageResource(com.nazaroi.common.R.drawable.ic_heart)
+        rightIcon.setOnClickListener {
+            onRightIconClick.invoke()
+        }
+    }
+}
+
+private fun ActivityMainBinding.setupSearchToolbar(navController: NavController) {
+    leftIcon.setBackNavigation(navController)
+    toolbarTitle.text = context.getString(com.nazaroi.common.R.string.search)
+}
+
+private fun ActivityMainBinding.setupWishlistToolbar(navController: NavController) {
+    leftIcon.setBackNavigation(navController)
+    toolbarTitle.text = context.getString(com.nazaroi.common.R.string.wishlist)
+}
+
+private fun ActivityMainBinding.setupPrivacyPolicyToolbar(navController: NavController) {
+    leftIcon.setBackNavigation(navController)
+    toolbarTitle.text = context.getString(com.nazaroi.common.R.string.privacy_policy)
+}
+
+private fun ActivityMainBinding.setupAboutUsToolbar(navController: NavController) {
+    leftIcon.setBackNavigation(navController)
+    toolbarTitle.text = context.getString(com.nazaroi.common.R.string.about_us)
+}

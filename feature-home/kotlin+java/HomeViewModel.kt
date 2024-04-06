@@ -2,6 +2,7 @@ package com.nazaroi.feature_home
 
 import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
+import com.nazaroi.base.ktx.logE
 import com.nazaroi.base.mvi.MviNavigationCommand
 import com.nazaroi.base.mvi.MviViewModel
 import com.nazaroi.base.util.onFailure
@@ -34,7 +35,9 @@ class HomeViewModel @Inject constructor(
                     if (count != 0) {
                         sendIntent(HomeIntent.LoadMovies)
                     }
-                }.onFailure {}
+                }.onFailure {
+                    logE("streamMovieGenreCountUseCase failed", throwable = it.cause)
+                }
             }
         }
     }
@@ -97,6 +100,7 @@ class HomeViewModel @Inject constructor(
                     movieCategory
                 )
             ).onFailure {
+                logE("getFirstPageMoviesByCategoryUseCase failed", throwable = it.cause)
                 reduceState {
                     when (movieCategory) {
                         MovieCategory.NowPlaying -> {
